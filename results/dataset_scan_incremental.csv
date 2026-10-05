@@ -1,0 +1,40 @@
+name,ok,error,n_channels,length,n_classes,n_train,n_test,min_per_class_train,has_nan
+Crop,True,,1.0,46.0,24.0,7200.0,16800.0,300.0,False
+ElectricDevices,True,,1.0,96.0,7.0,8926.0,7711.0,509.0,False
+FaceAll,True,,1.0,131.0,14.0,560.0,1690.0,40.0,False
+FacesUCR,True,,1.0,131.0,14.0,200.0,2050.0,4.0,False
+FiftyWords,True,,1.0,270.0,50.0,450.0,455.0,1.0,False
+Fungi,True,,1.0,201.0,18.0,18.0,186.0,1.0,False
+Handwriting,True,,3.0,152.0,26.0,150.0,850.0,2.0,False
+InsectWingbeatSound,True,,1.0,256.0,11.0,220.0,1980.0,20.0,False
+Lightning7,True,,1.0,319.0,7.0,70.0,73.0,5.0,False
+MedicalImages,True,,1.0,99.0,10.0,381.0,760.0,6.0,False
+MelbournePedestrian,False,"ValueError: setting an array element with a sequence. The requested array has an inhomogeneous shape after 2 dimensions. The detected shape was (2439, 1) + inhomogeneous part.",,,,,,,
+MiddlePhalanxTW,True,,1.0,80.0,6.0,399.0,154.0,25.0,False
+NonInvasiveFetalECGThorax1,True,,1.0,750.0,42.0,1800.0,1965.0,35.0,False
+NonInvasiveFetalECGThorax2,True,,1.0,750.0,42.0,1800.0,1965.0,35.0,False
+Plane,True,,1.0,144.0,7.0,105.0,105.0,9.0,False
+ProximalPhalanxTW,True,,1.0,80.0,6.0,400.0,205.0,16.0,False
+SwedishLeaf,True,,1.0,128.0,15.0,500.0,625.0,26.0,False
+Symbols,True,,1.0,398.0,6.0,25.0,995.0,3.0,False
+SyntheticControl,True,,1.0,60.0,6.0,300.0,300.0,50.0,False
+Trace,True,,1.0,275.0,4.0,100.0,100.0,21.0,False
+TwoPatterns,True,,1.0,128.0,4.0,1000.0,4000.0,237.0,False
+UWaveGestureLibraryAll,True,,1.0,945.0,8.0,896.0,3582.0,100.0,False
+WordSynonyms,True,,1.0,270.0,25.0,267.0,638.0,2.0,False
+Adiac,True,,1.0,176.0,37.0,390.0,391.0,4.0,False
+ChlorineConcentration,False,OSError: Inconsistent number of dimensions in case 463. Expecting 1 but have read 0,,,,,,,
+DistalPhalanxTW,True,,1.0,80.0,6.0,400.0,139.0,18.0,False
+ArticularyWordRecognition,True,,9.0,144.0,25.0,275.0,300.0,11.0,False
+Cricket,True,,6.0,1197.0,12.0,108.0,72.0,9.0,False
+Handwriting,True,,3.0,152.0,26.0,150.0,850.0,2.0,False
+Libras,True,,2.0,45.0,15.0,180.0,180.0,12.0,False
+LSST,True,,6.0,36.0,14.0,2459.0,2466.0,7.0,False
+NATOPS,True,,24.0,51.0,6.0,180.0,180.0,30.0,False
+PenDigits,True,,2.0,8.0,10.0,7494.0,3498.0,719.0,False
+PhonemeSpectra,True,,11.0,217.0,39.0,3315.0,3353.0,85.0,False
+SpokenArabicDigits,False,"ValueError: setting an array element with a sequence. The requested array has an inhomogeneous shape after 2 dimensions. The detected shape was (6599, 13) + inhomogeneous part.",,,,,,,
+UWaveGestureLibrary,True,,3.0,315.0,8.0,120.0,320.0,15.0,False
+EigenWorms,True,,6.0,17984.0,5.0,128.0,131.0,12.0,False
+Epilepsy,True,,3.0,206.0,4.0,137.0,138.0,30.0,False
+RacketSports,True,,6.0,30.0,4.0,151.0,152.0,34.0,False

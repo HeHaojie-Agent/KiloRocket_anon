@@ -1,0 +1,60 @@
+# 22 个数据集，(数据集, seed) 对 110 个
+
+## Table III 配置均值
+                       final     avg    base   novel  forget           mem     rank
+config                                                                             
+1nn-m16               0.5735  0.6426  0.6736  0.4825  0.0534  2.874349e+05  11.9227
+analytic-cvbal-k2520  0.6629  0.7284  0.6920  0.6436  0.1157  1.284559e+07   7.8409
+analytic-g1-k2520     0.6783  0.7584  0.8348  0.5361  0.0244  1.284559e+07   6.4091
+cnn-frozen-w64        0.5210  0.6053  0.5765  0.4734  0.1378  1.749178e+05  11.7500
+hdc-real-D8192        0.5790  0.6473  0.6662  0.5035  0.0657  3.887665e+05  11.3818
+minirocket-retrain    0.6733  0.7592  0.8591  0.5019  0.0098  1.532033e+06   6.6864
+mr-ncm-k10000         0.6281  0.6869  0.6736  0.5866  0.0854  5.143396e+05  10.4318
+mrrep-f840-m16        0.6966  0.7709  0.8188  0.5907  0.0568  3.391042e+05   4.8045
+mrrep-f840-m4         0.6899  0.7578  0.6953  0.6911  0.1802  1.701616e+05   5.7500
+mrrep-f840-m8         0.7044  0.7720  0.7691  0.6515  0.1064  2.423129e+05   4.0591
+prune-bin-f840        0.6580  0.7191  0.7061  0.6181  0.0874  9.645682e+03   8.7091
+prune-binzh-f336      0.6716  0.7344  0.7235  0.6281  0.0890  3.186273e+03   7.3273
+prune-binzh-f84       0.6456  0.7177  0.7117  0.5887  0.0960  7.967727e+02  10.0364
+prune-ncmzh-f84       0.6768  0.7421  0.7394  0.6210  0.0835  4.658182e+03   6.7727
+prune-ncmzh-f840      0.6821  0.7420  0.7321  0.6395  0.0817  4.658182e+04   6.1182
+
+## Table IV 同内存对比
+                     A               B      metric        band   won     n    delta  dpos  dn       p  p_holm
+0               Protos      1NN replay   final_acc        None  3503  3571  20.3007    22  22  0.0000  0.0000
+1         Ridge replay      1NN replay   final_acc        None  2047  2821   5.9318    16  22  0.0172  0.0344
+2               Protos    Ridge replay   final_acc        None  2688  4105   8.6853    21  22  0.0000  0.0000
+3      \quad $<$10\,KB                   final_acc     (0, 10)   333   355  15.9294     9   9  0.0039  0.0117
+4    \quad 10--100\,KB                   final_acc   (10, 100)  2217  3265   8.2892    18  20  0.0001  0.0003
+5   \quad $\ge$100\,KB                   final_acc  (100, inf)   138   485  -0.0796     5  16  0.3484  0.3484
+6               Protos   Fewer kernels   final_acc        None  8171  9115   8.2992    21  22  0.0000  0.0000
+7               Protos             HDC   final_acc        None  7955  9185  11.5127    20  22  0.0000  0.0000
+8               Protos      CNN protos   final_acc        None  5719  6195  20.9358    22  22  0.0000  0.0000
+9               Protos  Analytic, bal.   final_acc        None  3289  3560  12.2991    22  22  0.0000  0.0000
+10              Protos    ResNet FSCIL   final_acc        None  3686  4595  13.4128    20  22  0.0000  0.0000
+11              Protos    Ridge replay  novel_last        None  2024  4105   3.5200    16  22  0.0738  0.0738
+12              Protos  Analytic, bal.  novel_last        None  2391  3560   8.3094    15  22  0.0019  0.0038
+
+## Table III（v9）预算表：KiloRocket − 每个数据集上最好的其他组（点, 领先数据集数, Wilcoxon p 未校正）
+      1 KB: +6.5  17/22  p=0.0013
+      2 KB: +4.6  17/22  p=0.0047
+      5 KB: +3.2  16/22  p=0.0025
+     10 KB: +3.0  17/22  p=0.0037
+     20 KB: +1.3  14/22  p=0.0854
+     50 KB: +0.2  12/22  p=0.8736
+    100 KB: -1.9  4/22  p=0.0009
+    200 KB: -3.0  2/22  p=0.0000
+    500 KB: -3.3  2/22  p=0.0000
+   1000 KB: -3.7  1/22  p=0.0000
+## 预算曲线面积（1 KB–1 MB）：KiloRocket 对各组（领先数据集数, Wilcoxon p 未校正）
+  MR + ridge replay: area=0.463  22/22  p=0.0000
+  Raw series + 1NN replay: area=0.425  21/22  p=0.0000
+  MR protos, fewer kernels: area=0.622  20/22  p=0.0000
+  Selected protos + TEEN: area=0.621  22/22  p=0.0000
+  HDC protos: area=0.572  21/22  p=0.0000
+  CNN (base-trained), protos: area=0.426  22/22  p=0.0000
+  MR + analytic head: area=0.408  22/22  p=0.0000
+  ResNet + Decoupled-Cos.~\cite{zhang2021cec}: area=0.410  22/22  p=0.0000
+  ResNet + TEEN~\cite{wang2023teen}: area=0.397  22/22  p=0.0000
+  ResNet + ALICE~\cite{peng2022alice}: area=0.424  22/22  p=0.0000
+  ResNet + TS-ACL~\cite{li2024tsacl}: area=0.157  22/22  p=0.0000

@@ -1,0 +1,456 @@
+v5 结果：27 个数据集，seed [np.int64(0), np.int64(1), np.int64(2), np.int64(3), np.int64(4)]，协议 ['main', 'shot1', 'way1']，21060 行
+
+================ 0. 复现核对（main 协议 vs results_check.csv） ================
+  共同配置 34 个、4218 行；final_acc 最大差 6.49e-03；内存最大差 88 字节
+  ⚠ 不一致的配置：mr-ncm-k10000(3), mr-ncm-k2520(3), mr-ncm-k336(1), mr-ncm-k84(7), mr-ncm-k840(2), prune-ncm-f2520(4), prune-ncm-f336(2), prune-ncm-f84(2), prune-ncm-f840(5)
+
+================ 1. 各配置均值（main；KB 为算术平均，KBgeo 为几何平均） ================
+  config                      final    avg   base  novel forget        KB    KBgeo   rank  upd ms
+  prune-binh-f84              0.612  0.692  0.687  0.543  0.103       0.6      0.6   57.5     0.1
+  mr-bin-k84                  0.464  0.535  0.492  0.439  0.136       0.8      0.8   93.4     0.1
+  prune-binzh-f84             0.634  0.711  0.703  0.571  0.101       0.8      0.8   44.7     0.1
+  prune-bin-teen-f84          0.531  0.645  0.612  0.457  0.178       0.9      0.9   82.2     0.2
+  prune-bin-f84               0.611  0.692  0.687  0.543  0.103       0.9      0.9   57.7     0.1
+  prune-binz-f84              0.633  0.710  0.703  0.571  0.101       1.3      1.3   44.8     0.1
+  prune-binh-f336             0.639  0.709  0.697  0.587  0.096       2.4      2.4   39.2     0.1
+  mr-bin-k336                 0.571  0.640  0.607  0.538  0.116       3.1      3.1   71.5     0.1
+  prune-binzh-f336            0.657  0.726  0.712  0.609  0.097       3.1      3.1   27.7     0.1
+  prune-bin-teen-f336         0.587  0.681  0.636  0.544  0.158       3.8      3.7   66.4     0.2
+  prune-bin-f336              0.638  0.709  0.697  0.586  0.097       3.8      3.7   39.8     0.1
+  cnn-frozen-w8               0.430  0.514  0.477  0.390  0.139       3.8      3.7   91.4     1.0
+  mr-ncm-k84                  0.522  0.590  0.556  0.490  0.118       4.1      3.6   79.8     0.1
+  prune-ncm-f84               0.611  0.687  0.684  0.546  0.096       4.2      3.8   53.5     0.1
+  prune-ncmch-f84             0.604  0.680  0.673  0.544  0.101       4.2      3.8   57.6     0.1
+  mr-ncmc-k84                 0.510  0.577  0.540  0.485  0.121       4.4      4.0   83.2     0.1
+  prune-ncmzh-f84             0.664  0.734  0.730  0.603  0.089       4.4      4.0   24.5     0.1
+  prune-ncmc-f84              0.604  0.680  0.673  0.544  0.100       4.6      4.2   57.3     0.1
+  prune-ncmc-teen-f84         0.577  0.665  0.615  0.543  0.158       4.6      4.2   68.8     0.2
+  mr-ncmz-k84                 0.529  0.598  0.556  0.505  0.128       4.7      4.3   77.1     0.1
+  prune-ncmz-f84              0.663  0.734  0.729  0.602  0.090       4.9      4.5   24.9     0.1
+  hdc-bin-D512                0.501  0.568  0.561  0.445  0.088       4.9      4.9   90.0    10.2
+  prune-binz-f336             0.657  0.726  0.711  0.610  0.097       5.1      5.1   28.3     0.1
+  prune-binh-f840             0.642  0.709  0.693  0.598  0.095       6.1      6.1   35.8     0.1
+  prune-binzh-f840            0.658  0.723  0.706  0.616  0.095       7.7      7.7   26.8     0.2
+  mr-bin-k840                 0.593  0.659  0.627  0.563  0.113       7.7      7.7   63.8     0.1
+  prune-bin-f840              0.642  0.709  0.693  0.598  0.095       9.4      9.3   36.1     0.2
+  prune-bin-teen-f840         0.597  0.684  0.637  0.562  0.150       9.4      9.3   60.3     0.4
+  hdc-bin-D1024               0.523  0.590  0.594  0.460  0.080       9.8      9.8   81.9    13.5
+  cnn-frozen-w16              0.449  0.535  0.498  0.408  0.147      12.5     12.4   87.9     1.1
+  prune-binz-f840             0.657  0.723  0.705  0.615  0.096      12.7     12.6   27.3     0.2
+  mr-ncm-k336                 0.552  0.620  0.598  0.509  0.103      16.3     14.5   76.0     0.1
+  prune-ncm-f336              0.617  0.690  0.687  0.554  0.090      17.0     15.2   46.5     0.1
+  prune-ncmch-f336            0.611  0.682  0.671  0.560  0.098      17.0     15.2   51.1     0.1
+  prune-ncmzh-f336            0.669  0.737  0.727  0.618  0.091      17.6     15.9   21.3     0.1
+  mr-ncmc-k336                0.546  0.613  0.581  0.515  0.112      17.6     15.9   78.7     0.1
+  prune-binh-f2520            0.637  0.702  0.682  0.597  0.097      18.3     18.2   39.7     0.3
+  prune-ncmc-teen-f336        0.588  0.670  0.610  0.569  0.158      18.3     16.6   63.0     0.2
+  prune-ncmc-f336             0.611  0.682  0.671  0.560  0.098      18.3     16.6   51.1     0.1
+  analytic-cv-k84             0.482  0.602  0.751  0.226  0.014      18.4     18.2   84.0     0.2
+  analytic-g1-k84             0.479  0.598  0.745  0.228  0.015      18.4     18.2   85.6     0.2
+  analytic-cvbal-k84          0.562  0.646  0.567  0.561  0.182      18.4     18.2   70.5     0.2
+  mr-ncmz-k336                0.591  0.667  0.653  0.537  0.103      19.0     17.3   58.1     0.1
+  prune-ncmz-f336             0.670  0.738  0.728  0.617  0.090      19.6     18.0   21.2     0.1
+  hdc-bin-D2048               0.536  0.604  0.612  0.469  0.073      19.7     19.5   76.6    20.4
+  mr-bin-k2520                0.600  0.664  0.634  0.571  0.108      23.2     23.1   60.1     0.2
+  prune-binzh-f2520           0.645  0.710  0.688  0.608  0.099      23.2     23.1   34.9     0.4
+  1nn-m1                      0.415  0.467  0.414  0.419  0.116      25.7      7.7  102.6     0.1
+  hdc-real-D512               0.541  0.611  0.624  0.468  0.074      27.1     24.5   77.0    10.2
+  prune-bin-f2520             0.637  0.702  0.682  0.596  0.096      28.1     28.0   39.9     0.3
+  prune-bin-teen-f2520        0.596  0.680  0.632  0.562  0.146      28.1     28.0   61.3     0.6
+  mrrep-f84-m1                0.389  0.555  0.299  0.471  0.565      30.7     13.8   99.8     3.0
+  prune-binz-f2520            0.645  0.710  0.688  0.608  0.099      38.0     37.9   35.1     0.4
+  hdc-bin-D4096               0.544  0.611  0.619  0.476  0.075      39.3     39.1   73.7    35.1
+  mr-ncm-k840                 0.584  0.649  0.633  0.537  0.094      40.8     36.3   61.8     0.1
+  prune-ncmch-f840            0.617  0.685  0.670  0.571  0.098      42.5     38.1   46.8     0.1
+  prune-ncm-f840              0.623  0.692  0.694  0.559  0.084      42.5     38.1   42.5     0.1
+  prune-ncmzh-f840            0.668  0.733  0.720  0.623  0.090      44.1     39.8   20.8     0.2
+  mr-ncmc-k840                0.576  0.642  0.610  0.545  0.113      44.1     39.8   67.2     0.1
+  cnn-frozen-w32              0.477  0.565  0.531  0.430  0.144      45.1     44.9   83.1     1.7
+  cnn-finetune-w32            0.134  0.309  0.024  0.240  0.647      45.1     45.0  108.9    74.2
+  prune-ncmc-teen-f840        0.593  0.672  0.609  0.580  0.159      45.8     41.6   60.7     0.3
+  prune-ncmc-f840             0.617  0.685  0.670  0.571  0.098      45.8     41.6   47.0     0.1
+  mr-ncmz-k840                0.599  0.673  0.658  0.546  0.103      47.4     43.4   55.9     0.1
+  prune-ncmz-f840             0.669  0.734  0.720  0.623  0.090      49.0     45.1   20.6     0.2
+  1nn-m2                      0.463  0.521  0.473  0.455  0.117      51.4     15.4   98.8     0.1
+  hdc-real-D1024              0.548  0.620  0.639  0.468  0.069      54.2     48.9   72.3    13.1
+  mrrep-f84-m2                0.576  0.682  0.555  0.599  0.309      56.4     22.0   69.1     3.1
+  mrrep-f840-m1               0.463  0.607  0.373  0.547  0.507      74.8     57.2   92.7     3.3
+  hdc-bin-D8192               0.545  0.613  0.622  0.476  0.074      78.6     78.1   72.9    63.9
+  mr-bin-k10000               0.598  0.661  0.630  0.569  0.109      92.1     91.7   61.9     0.5
+  mrrep-f840-m2               0.612  0.706  0.585  0.643  0.295     100.5     67.4   55.1     3.7
+  1nn-m4                      0.518  0.572  0.524  0.513  0.110     102.8     30.8   84.8     0.1
+  mrrep-f84-m4                0.658  0.737  0.684  0.638  0.179     107.8     37.8   32.9     3.5
+  hdc-real-D2048              0.559  0.630  0.650  0.478  0.067     108.3     97.9   68.1    20.6
+  mr-ncm-k2520                0.607  0.670  0.655  0.563  0.091     122.5    108.9   52.9     0.1
+  prune-ncmch-f2520           0.619  0.684  0.664  0.579  0.099     127.4    114.2   46.9     0.3
+  prune-ncm-f2520             0.624  0.692  0.690  0.564  0.083     127.4    114.2   42.7     0.2
+  prune-ncmzh-f2520           0.657  0.721  0.703  0.618  0.092     132.3    119.5   27.4     0.3
+  mr-ncmc-k2520               0.600  0.661  0.632  0.570  0.104     132.3    119.5   58.8     0.2
+  prune-ncmc-teen-f2520       0.594  0.671  0.603  0.587  0.160     137.3    124.8   60.4     0.6
+  prune-ncmc-f2520            0.619  0.684  0.664  0.579  0.099     137.3    124.8   47.0     0.3
+  mr-ncmz-k2520               0.589  0.665  0.650  0.533  0.110     142.2    130.1   59.6     0.2
+  prune-ncmz-f2520            0.658  0.721  0.703  0.618  0.092     147.1    135.3   27.2     0.3
+  mrrep-f840-m4               0.677  0.754  0.684  0.675  0.196     151.9     86.1   23.0     4.2
+  1nn-m8                      0.549  0.609  0.593  0.508  0.087     165.6     49.2   73.9     0.1
+  cnn-frozen-w64              0.495  0.584  0.554  0.443  0.141     170.2    170.0   78.0     3.4
+  mrrep-f84-m8                0.662  0.746  0.769  0.565  0.095     170.5     56.3   30.7     4.7
+  mrrep-f840-m8               0.696  0.771  0.765  0.635  0.114     214.7    107.0   15.9     5.7
+  hdc-real-D4096              0.559  0.629  0.646  0.482  0.068     216.7    195.7   67.9    35.1
+  analytic-cvbal-k336         0.596  0.674  0.620  0.580  0.148     238.8    238.6   57.9     3.8
+  analytic-cv-k336            0.510  0.626  0.767  0.266  0.015     238.8    238.6   84.9     3.8
+  analytic-g1-k336            0.596  0.700  0.813  0.393  0.020     238.8    238.6   57.0     3.9
+  1nn-m16                     0.561  0.634  0.666  0.464  0.056     251.1     74.4   69.4     0.1
+  mrrep-f84-m16               0.638  0.736  0.821  0.468  0.043     256.1     81.6   42.6     6.5
+  mrrep-f840-m16              0.690  0.771  0.823  0.569  0.057     300.2    134.5   18.8     9.2
+  hdc-real-D8192              0.559  0.629  0.646  0.481  0.068     433.3    391.4   67.9    64.9
+  mr-ncm-k10000               0.613  0.674  0.659  0.569  0.089     485.9    431.8   49.6     0.3
+  mr-ncmc-k10000              0.605  0.666  0.635  0.577  0.104     525.0    474.1   54.8     0.5
+  mr-ncmz-k10000              0.561  0.647  0.642  0.492  0.116     564.0    515.9   65.0     0.6
+  mrrep-ffull-m1              0.499  0.621  0.415  0.579  0.470     589.8    530.1   88.2     7.5
+  mrrep-ffull-m2              0.601  0.696  0.563  0.640  0.322     615.5    543.5   60.3     9.8
+  mrrep-ffull-m4              0.663  0.742  0.656  0.674  0.229     666.9    568.8   30.9    14.6
+  mrrep-ffull-m8              0.687  0.763  0.739  0.642  0.146     729.6    597.4   19.1    22.4
+  mrrep-ffull-m16             0.690  0.770  0.813  0.581  0.072     815.2    633.6   18.6    36.8
+  minirocket-retrain          0.660  0.754  0.863  0.469  0.009    1378.5    736.6   33.2   144.1
+  analytic-cvbal-k840         0.635  0.707  0.667  0.609  0.127    1423.9   1423.7   39.6    54.9
+  analytic-cv-k840            0.540  0.654  0.797  0.295  0.012    1423.9   1423.7   74.8    54.8
+  analytic-g1-k840            0.640  0.734  0.831  0.461  0.022    1423.9   1423.7   40.8    55.1
+  analytic-cv-k2520           0.556  0.669  0.812  0.312  0.011   12540.4  12540.2   69.7   413.1
+  analytic-cvbal-k2520        0.656  0.726  0.692  0.627  0.117   12540.4  12540.2   30.7   410.0
+  analytic-g1-k2520           0.669  0.756  0.842  0.507  0.022   12540.4  12540.2   28.8   411.9
+
+================ 2. 配对效应（同一 F，Δ = A − B，点；p 为逐数据集均值的 Wilcoxon） ================
+  fp32 中心化 vs 不中心化               prune-ncmc-f84         vs prune-ncm-f84        | final  -0.7 (6/27, p=0.001) | base  -1.0 (7/27, p=0.014) | novel  -0.2 (8/27, p=0.123)
+  fp32 z-score vs 中心化            prune-ncmz-f84         vs prune-ncmc-f84       | final  +5.9 (26/27, p=0.000) | base  +5.6 (26/27, p=0.000) | novel  +5.9 (25/27, p=0.000)
+  1-bit vs fp32 中心化              prune-bin-f84          vs prune-ncmc-f84       | final  +0.7 (17/27, p=0.248) | base  +1.4 (19/27, p=0.041) | novel  -0.1 (14/27, p=0.878)
+  1-bit z-score vs 1-bit         prune-binz-f84         vs prune-bin-f84        | final  +2.2 (26/27, p=0.000) | base  +1.6 (23/27, p=0.000) | novel  +2.9 (24/27, p=0.000)
+  1-bit z vs fp32 z              prune-binz-f84         vs prune-ncmz-f84       | final  -3.0 (0/27, p=0.000) | base  -2.6 (3/27, p=0.000) | novel  -3.1 (1/27, p=0.000)
+  1-bit fp16 状态 vs fp32 状态       prune-binh-f84         vs prune-bin-f84        | final  +0.1 (13/27, p=0.101) | base  +0.0 (10/27, p=0.546) | novel  +0.1 (13/27, p=0.099)
+  1-bit z fp16 vs fp32           prune-binzh-f84        vs prune-binz-f84       | final  +0.0 (9/27, p=0.951) | base  +0.0 (9/27, p=0.605) | novel  +0.0 (13/27, p=0.548)
+  TEEN 校准（1-bit）                 prune-bin-teen-f84     vs prune-bin-f84        | final  -8.0 (0/27, p=0.000) | base  -7.5 (1/27, p=0.000) | novel  -8.6 (3/27, p=0.000)
+  TEEN 校准（fp32 中心化）              prune-ncmc-teen-f84    vs prune-ncmc-f84       | final  -2.7 (3/27, p=0.000) | base  -5.8 (0/27, p=0.000) | novel  -0.0 (15/27, p=0.578)
+  fp32 中心化 vs 不中心化               prune-ncmc-f336        vs prune-ncm-f336       | final  -0.6 (8/27, p=0.012) | base  -1.7 (6/27, p=0.001) | novel  +0.6 (17/27, p=0.077)
+  fp32 z-score vs 中心化            prune-ncmz-f336        vs prune-ncmc-f336      | final  +5.8 (25/27, p=0.000) | base  +5.7 (24/27, p=0.000) | novel  +5.8 (23/27, p=0.000)
+  1-bit vs fp32 中心化              prune-bin-f336         vs prune-ncmc-f336      | final  +2.7 (22/27, p=0.000) | base  +2.6 (22/27, p=0.000) | novel  +2.7 (18/27, p=0.007)
+  1-bit z-score vs 1-bit         prune-binz-f336        vs prune-bin-f336       | final  +1.9 (22/27, p=0.000) | base  +1.4 (19/27, p=0.015) | novel  +2.3 (22/27, p=0.000)
+  1-bit z vs fp32 z              prune-binz-f336        vs prune-ncmz-f336      | final  -1.2 (4/27, p=0.000) | base  -1.7 (4/27, p=0.000) | novel  -0.8 (8/27, p=0.091)
+  1-bit fp16 状态 vs fp32 状态       prune-binh-f336        vs prune-bin-f336       | final  +0.1 (14/27, p=0.236) | base  +0.0 (11/27, p=0.976) | novel  +0.1 (13/27, p=0.385)
+  1-bit z fp16 vs fp32           prune-binzh-f336       vs prune-binz-f336      | final  +0.0 (11/27, p=0.920) | base  +0.1 (15/27, p=0.201) | novel  -0.0 (9/27, p=0.316)
+  TEEN 校准（1-bit）                 prune-bin-teen-f336    vs prune-bin-f336       | final  -5.1 (2/27, p=0.000) | base  -6.1 (1/27, p=0.000) | novel  -4.2 (5/27, p=0.001)
+  TEEN 校准（fp32 中心化）              prune-ncmc-teen-f336   vs prune-ncmc-f336      | final  -2.3 (4/27, p=0.000) | base  -6.0 (0/27, p=0.000) | novel  +0.9 (17/27, p=0.086)
+  fp32 中心化 vs 不中心化               prune-ncmc-f840        vs prune-ncm-f840       | final  -0.6 (9/27, p=0.012) | base  -2.4 (4/27, p=0.000) | novel  +1.2 (20/27, p=0.001)
+  fp32 z-score vs 中心化            prune-ncmz-f840        vs prune-ncmc-f840      | final  +5.2 (24/27, p=0.000) | base  +5.0 (24/27, p=0.000) | novel  +5.3 (21/27, p=0.000)
+  1-bit vs fp32 中心化              prune-bin-f840         vs prune-ncmc-f840      | final  +2.5 (20/27, p=0.003) | base  +2.3 (19/27, p=0.002) | novel  +2.7 (20/27, p=0.005)
+  1-bit z-score vs 1-bit         prune-binz-f840        vs prune-bin-f840       | final  +1.5 (21/27, p=0.000) | base  +1.3 (19/27, p=0.019) | novel  +1.7 (21/27, p=0.001)
+  1-bit z vs fp32 z              prune-binz-f840        vs prune-ncmz-f840      | final  -1.2 (6/27, p=0.000) | base  -1.5 (4/27, p=0.000) | novel  -0.8 (8/27, p=0.046)
+  1-bit fp16 状态 vs fp32 状态       prune-binh-f840        vs prune-bin-f840       | final  +0.0 (14/27, p=0.648) | base  +0.1 (12/27, p=0.375) | novel  -0.0 (12/27, p=0.465)
+  1-bit z fp16 vs fp32           prune-binzh-f840       vs prune-binz-f840      | final  +0.1 (15/27, p=0.059) | base  +0.0 (14/27, p=0.484) | novel  +0.1 (16/27, p=0.381)
+  TEEN 校准（1-bit）                 prune-bin-teen-f840    vs prune-bin-f840       | final  -4.5 (2/27, p=0.000) | base  -5.5 (1/27, p=0.000) | novel  -3.6 (5/27, p=0.000)
+  TEEN 校准（fp32 中心化）              prune-ncmc-teen-f840   vs prune-ncmc-f840      | final  -2.4 (3/27, p=0.000) | base  -6.1 (0/27, p=0.000) | novel  +0.9 (16/27, p=0.081)
+  fp32 中心化 vs 不中心化               prune-ncmc-f2520       vs prune-ncm-f2520      | final  -0.6 (11/27, p=0.129) | base  -2.7 (4/27, p=0.000) | novel  +1.5 (20/27, p=0.003)
+  fp32 z-score vs 中心化            prune-ncmz-f2520       vs prune-ncmc-f2520     | final  +3.9 (23/27, p=0.000) | base  +3.9 (20/27, p=0.001) | novel  +4.0 (24/27, p=0.000)
+  1-bit vs fp32 中心化              prune-bin-f2520        vs prune-ncmc-f2520     | final  +1.8 (20/27, p=0.003) | base  +1.8 (19/27, p=0.005) | novel  +1.8 (19/27, p=0.019)
+  1-bit z-score vs 1-bit         prune-binz-f2520       vs prune-bin-f2520      | final  +0.9 (16/27, p=0.043) | base  +0.6 (17/27, p=0.107) | novel  +1.1 (16/27, p=0.058)
+  1-bit z vs fp32 z              prune-binz-f2520       vs prune-ncmz-f2520     | final  -1.3 (4/27, p=0.000) | base  -1.5 (2/27, p=0.000) | novel  -1.0 (7/27, p=0.026)
+  1-bit fp16 状态 vs fp32 状态       prune-binh-f2520       vs prune-bin-f2520      | final  +0.0 (14/27, p=0.085) | base  +0.0 (13/27, p=0.028) | novel  +0.0 (7/27, p=0.795)
+  1-bit z fp16 vs fp32           prune-binzh-f2520      vs prune-binz-f2520     | final  +0.0 (12/27, p=0.830) | base  -0.0 (10/27, p=0.378) | novel  +0.0 (13/27, p=0.648)
+  TEEN 校准（1-bit）                 prune-bin-teen-f2520   vs prune-bin-f2520      | final  -4.0 (2/27, p=0.000) | base  -5.0 (1/27, p=0.000) | novel  -3.4 (8/27, p=0.008)
+  TEEN 校准（fp32 中心化）              prune-ncmc-teen-f2520  vs prune-ncmc-f2520     | final  -2.4 (4/27, p=0.000) | base  -6.1 (0/27, p=0.000) | novel  +0.8 (19/27, p=0.052)
+  减核：fp32 中心化 vs 不中心化            mr-ncmc-k84            vs mr-ncm-k84           | final  -1.2 (8/27, p=0.091) | base  -1.6 (9/27, p=0.062) | novel  -0.5 (12/27, p=0.313)
+  减核：fp32 z vs 中心化               mr-ncmz-k84            vs mr-ncmc-k84          | final  +1.8 (22/27, p=0.001) | base  +1.7 (21/27, p=0.004) | novel  +2.0 (19/27, p=0.006)
+  减核：fp32 中心化 vs 不中心化            mr-ncmc-k336           vs mr-ncm-k336          | final  -0.6 (10/27, p=0.091) | base  -1.6 (5/27, p=0.002) | novel  +0.6 (19/27, p=0.075)
+  减核：fp32 z vs 中心化               mr-ncmz-k336           vs mr-ncmc-k336         | final  +4.5 (18/27, p=0.015) | base  +7.2 (21/27, p=0.000) | novel  +2.2 (17/27, p=0.148)
+  减核：fp32 中心化 vs 不中心化            mr-ncmc-k840           vs mr-ncm-k840          | final  -0.8 (10/27, p=0.025) | base  -2.4 (4/27, p=0.000) | novel  +0.8 (19/27, p=0.111)
+  减核：fp32 z vs 中心化               mr-ncmz-k840           vs mr-ncmc-k840         | final  +2.3 (17/27, p=0.248) | base  +4.8 (20/27, p=0.004) | novel  +0.1 (13/27, p=0.841)
+  减核：fp32 中心化 vs 不中心化            mr-ncmc-k2520          vs mr-ncm-k2520         | final  -0.8 (9/27, p=0.014) | base  -2.3 (5/27, p=0.001) | novel  +0.8 (17/27, p=0.211)
+  减核：fp32 z vs 中心化               mr-ncmz-k2520          vs mr-ncmc-k2520        | final  -1.1 (10/27, p=0.611) | base  +1.8 (16/27, p=0.077) | novel  -3.7 (10/27, p=0.069)
+  减核：fp32 中心化 vs 不中心化            mr-ncmc-k10000         vs mr-ncm-k10000        | final  -0.8 (8/27, p=0.007) | base  -2.4 (4/27, p=0.000) | novel  +0.8 (15/27, p=0.137)
+  减核：fp32 z vs 中心化               mr-ncmz-k10000         vs mr-ncmc-k10000       | final  -4.4 (11/27, p=0.062) | base  +0.7 (18/27, p=0.135) | novel  -8.5 (6/27, p=0.001)
+
+================ 3. 平均帕累托前沿（main，final_acc，算术平均内存） ================
+  prune-binh-f84                  0.61 KB  final=0.6116  novel=0.5434
+  prune-binzh-f84                 0.77 KB  final=0.6336  novel=0.5714
+  prune-binh-f336                 2.44 KB  final=0.6387  novel=0.5869
+  prune-binzh-f336                3.09 KB  final=0.6574  novel=0.6092
+  prune-ncmzh-f84                 4.41 KB  final=0.6639  novel=0.6032
+  prune-ncmzh-f336               17.65 KB  final=0.6692  novel=0.6180
+  prune-ncmz-f336                19.61 KB  final=0.6695  novel=0.6175
+  mrrep-f840-m4                 151.91 KB  final=0.6770  novel=0.6753
+  mrrep-f840-m8                 214.66 KB  final=0.6957  novel=0.6351
+  —— 用几何平均内存排序时的前沿 ——
+  prune-binh-f84                  0.61 KB(geo)  final=0.6116
+  prune-binzh-f84                 0.77 KB(geo)  final=0.6336
+  prune-binh-f336                 2.42 KB(geo)  final=0.6387
+  prune-binzh-f336                3.08 KB(geo)  final=0.6574
+  prune-ncmzh-f84                 3.98 KB(geo)  final=0.6639
+  prune-ncmzh-f336               15.93 KB(geo)  final=0.6692
+  prune-ncmz-f336                18.04 KB(geo)  final=0.6695
+  mrrep-f840-m4                  86.09 KB(geo)  final=0.6770
+  mrrep-f840-m8                 107.04 KB(geo)  final=0.6957
+  —— 各族曲线 ——
+  1nn                m1:25.7KB/0.415  m2:51.4KB/0.463  m4:102.8KB/0.518  m8:165.6KB/0.549  m16:251.1KB/0.561
+  analytic-cv        k84:18.4KB/0.482  k336:238.8KB/0.510  k840:1423.9KB/0.540  k2520:12540.4KB/0.556
+  analytic-cvbal     k84:18.4KB/0.562  k336:238.8KB/0.596  k840:1423.9KB/0.635  k2520:12540.4KB/0.656
+  analytic-g1        k84:18.4KB/0.479  k336:238.8KB/0.596  k840:1423.9KB/0.640  k2520:12540.4KB/0.669
+  cnn-finetune       w32:45.1KB/0.134
+  cnn-frozen         w8:3.8KB/0.430  w16:12.5KB/0.449  w32:45.1KB/0.477  w64:170.2KB/0.495
+  hdc-bin            D512:4.9KB/0.501  D1024:9.8KB/0.523  D2048:19.7KB/0.536  D4096:39.3KB/0.544  D8192:78.6KB/0.545
+  hdc-real           D512:27.1KB/0.541  D1024:54.2KB/0.548  D2048:108.3KB/0.559  D4096:216.7KB/0.559  D8192:433.3KB/0.559
+  minirocket-retrain retrain:1378.5KB/0.660
+  mr-bin             k84:0.8KB/0.464  k336:3.1KB/0.571  k840:7.7KB/0.593  k2520:23.2KB/0.600  k10000:92.1KB/0.598
+  mr-ncm             k84:4.1KB/0.522  k336:16.3KB/0.552  k840:40.8KB/0.584  k2520:122.5KB/0.607  k10000:485.9KB/0.613
+  mr-ncmc            k84:4.4KB/0.510  k336:17.6KB/0.546  k840:44.1KB/0.576  k2520:132.3KB/0.600  k10000:525.0KB/0.605
+  mr-ncmz            k84:4.7KB/0.529  k336:19.0KB/0.591  k840:47.4KB/0.599  k2520:142.2KB/0.589  k10000:564.0KB/0.561
+  mrrep-f84          m1:30.7KB/0.389  m2:56.4KB/0.576  m4:107.8KB/0.658  m8:170.5KB/0.662  m16:256.1KB/0.638
+  mrrep-f840         m1:74.8KB/0.463  m2:100.5KB/0.612  m4:151.9KB/0.677  m8:214.7KB/0.696  m16:300.2KB/0.690
+  mrrep-ffull        m1:589.8KB/0.499  m2:615.5KB/0.601  m4:666.9KB/0.663  m8:729.6KB/0.687  m16:815.2KB/0.690
+  prune-bin          f84:0.9KB/0.611  f336:3.8KB/0.638  f840:9.4KB/0.642  f2520:28.1KB/0.637
+  prune-bin-teen     f84:0.9KB/0.531  f336:3.8KB/0.587  f840:9.4KB/0.597  f2520:28.1KB/0.596
+  prune-binh         f84:0.6KB/0.612  f336:2.4KB/0.639  f840:6.1KB/0.642  f2520:18.3KB/0.637
+  prune-binz         f84:1.3KB/0.633  f336:5.1KB/0.657  f840:12.7KB/0.657  f2520:38.0KB/0.645
+  prune-binzh        f84:0.8KB/0.634  f336:3.1KB/0.657  f840:7.7KB/0.658  f2520:23.2KB/0.645
+  prune-ncm          f84:4.2KB/0.611  f336:17.0KB/0.617  f840:42.5KB/0.623  f2520:127.4KB/0.624
+  prune-ncmc         f84:4.6KB/0.604  f336:18.3KB/0.611  f840:45.8KB/0.617  f2520:137.3KB/0.619
+  prune-ncmc-teen    f84:4.6KB/0.577  f336:18.3KB/0.588  f840:45.8KB/0.593  f2520:137.3KB/0.594
+  prune-ncmch        f84:4.2KB/0.604  f336:17.0KB/0.611  f840:42.5KB/0.617  f2520:127.4KB/0.619
+  prune-ncmz         f84:4.9KB/0.663  f336:19.6KB/0.670  f840:49.0KB/0.669  f2520:147.1KB/0.658
+  prune-ncmzh        f84:4.4KB/0.664  f336:17.6KB/0.669  f840:44.1KB/0.668  f2520:132.3KB/0.657
+
+================ 4. 同内存对比（main；A 的每个点对 B 的前沿插值） ================
+  Proto-selected                 vs Replay-1NN                    : 胜 4443/4511  Δ=+20.8 点  数据集 27/27  p=0.0000  [排除 低于 1730 / 高于 681]
+          0–10    KB: 1200 点  Δ= +17.4  数据集 14/14  p=0.0001
+         10–100   KB: 3093 点  Δ= +22.4  数据集 24/24  p=0.0000
+        100–1000  KB:  218 点  Δ= +16.3  数据集 12/12  p=0.0005
+  Proto-selected                 vs Replay-MR                     : 胜 3317/4945  Δ=+8.0 点  数据集 26/27  p=0.0000  [排除 低于 2305 / 高于 0]
+          0–10    KB:  355 点  Δ= +16.2  数据集 9/9  p=0.0039
+         10–100   KB: 4005 点  Δ=  +8.6  数据集 23/25  p=0.0000
+        100–1000  KB:  585 点  Δ=  -0.7  数据集 6/21  p=0.1470
+  Replay-MR                      vs Proto-selected                : 胜 1386/4945  Δ=-8.0 点  数据集 1/27  p=0.0000  [排除 低于 0 / 高于 870]
+          0–10    KB:  355 点  Δ= -16.2  数据集 0/9  p=0.0039
+         10–100   KB: 4005 点  Δ=  -8.6  数据集 2/25  p=0.0000
+        100–1000  KB:  585 点  Δ=  +0.7  数据集 15/21  p=0.1470
+  Replay-MR                      vs Replay-1NN                    : 胜 2677/3636  Δ=+7.8 点  数据集 20/27  p=0.0022  [排除 低于 0 / 高于 1206]
+          0–10    KB:  325 点  Δ=  -2.8  数据集 4/9  p=0.4258
+         10–100   KB: 2733 点  Δ=  +8.8  数据集 19/24  p=0.0001
+        100–1000  KB:  473 点  Δ=  +9.4  数据集 13/13  p=0.0002
+       1000–inf   KB:  105 点  Δ=  +7.9  数据集 1/1  p=nan
+  Proto-selected                 vs HDC                           : 胜 6793/7160  Δ=+14.0 点  数据集 27/27  p=0.0000  [排除 低于 1360 / 高于 0]
+          0–10    KB: 1480 点  Δ= +17.7  数据集 27/27  p=0.0000
+         10–100   KB: 4965 点  Δ= +13.3  数据集 27/27  p=0.0000
+        100–1000  KB:  715 点  Δ= +10.9  数据集 21/21  p=0.0000
+  Proto-selected                 vs Proto-fewer                   : 胜 10187/11155  Δ=+8.8 点  数据集 26/27  p=0.0000  [排除 低于 135 / 高于 0]
+          0–10    KB: 5475 点  Δ= +12.7  数据集 26/27  p=0.0000
+         10–100   KB: 4965 点  Δ=  +5.2  数据集 25/27  p=0.0000
+        100–1000  KB:  715 点  Δ=  +4.3  数据集 21/21  p=0.0000
+  Proto-selected                 vs Analytic-bal                  : 胜 4045/4350  Δ=+12.0 点  数据集 27/27  p=0.0000  [排除 低于 2590 / 高于 0]
+         10–100   KB: 3635 点  Δ= +12.5  数据集 27/27  p=0.0000
+        100–1000  KB:  715 点  Δ=  +9.6  数据集 21/21  p=0.0000
+  Proto-selected                 vs CNN-frozen                    : 胜 7159/7635  Δ=+22.4 点  数据集 27/27  p=0.0000  [排除 低于 1080 / 高于 85]
+          0–10    KB: 2100 点  Δ= +24.8  数据集 27/27  p=0.0000
+         10–100   KB: 4965 点  Δ= +21.8  数据集 27/27  p=0.0000
+        100–1000  KB:  570 点  Δ= +19.2  数据集 20/21  p=0.0000
+  Proto-selected                 vs Proto-selected (v4: bin/ncm)  : 胜 8216/10320  Δ=+2.5 点  数据集 27/27  p=0.0000  [排除 低于 270 / 高于 405]
+          0–10    KB: 5035 点  Δ=  +2.8  数据集 27/27  p=0.0000
+         10–100   KB: 4765 点  Δ=  +2.2  数据集 25/27  p=0.0000
+        100–1000  KB:  520 点  Δ=  +2.2  数据集 13/13  p=0.0002
+  —— Holm 校正后的 p（上表整体对比） ——
+      Proto-selected vs Replay-1NN                                   p=0.0000  Holm p=0.0000
+      Proto-selected vs Replay-MR                                    p=0.0000  Holm p=0.0000
+      Replay-MR vs Proto-selected                                    p=0.0000  Holm p=0.0000
+      Replay-MR vs Replay-1NN                                        p=0.0022  Holm p=0.0022
+      Proto-selected vs HDC                                          p=0.0000  Holm p=0.0000
+      Proto-selected vs Proto-fewer                                  p=0.0000  Holm p=0.0000
+      Proto-selected vs Analytic-bal                                 p=0.0000  Holm p=0.0000
+      Proto-selected vs CNN-frozen                                   p=0.0000  Holm p=0.0000
+      Proto-selected vs Proto-selected (v4: bin/ncm)                 p=0.0000  Holm p=0.0000
+  —— 只看新类精度（novel_last） ——
+  Proto-selected                 vs Replay-MR                     : 胜 2335/4945  Δ=+1.8 点  数据集 19/27  p=0.0772  [排除 低于 2305 / 高于 0]
+  Proto-selected                 vs Replay-1NN                    : 胜 3887/4511  Δ=+16.6 点  数据集 25/27  p=0.0000  [排除 低于 1730 / 高于 681]
+  Proto-selected                 vs Analytic-bal                  : 胜 3093/4350  Δ=+8.3 点  数据集 20/27  p=0.0001  [排除 低于 2590 / 高于 0]
+
+================ 5. 交叉点：同编码器回放何时超过原型 ================
+  MiddlePhalanxTW              回放首次超过原型的预算 ≈      10.8 KB   最高精度 原型 0.509 / 回放 0.530
+  Plane                        回放首次超过原型的预算 ≈      11.5 KB   最高精度 原型 0.998 / 回放 1.000
+  ProximalPhalanxTW            回放首次超过原型的预算 ≈      13.2 KB   最高精度 原型 0.740 / 回放 0.714
+  MedicalImages                回放首次超过原型的预算 ≈      20.1 KB   最高精度 原型 0.461 / 回放 0.592
+  ElectricDevices              回放首次超过原型的预算 ≈      22.0 KB   最高精度 原型 0.507 / 回放 0.509
+  DistalPhalanxTW              回放首次超过原型的预算 ≈      24.3 KB   最高精度 原型 0.655 / 回放 0.643
+  Libras                       回放首次超过原型的预算 ≈      27.5 KB   最高精度 原型 0.788 / 回放 0.826
+  SyntheticControl             回放首次超过原型的预算 ≈      42.7 KB   最高精度 原型 0.975 / 回放 0.982
+  UWaveGestureLibraryX         回放首次超过原型的预算 ≈      45.5 KB   最高精度 原型 0.697 / 回放 0.732
+  PenDigits                    回放首次超过原型的预算 ≈      48.4 KB   最高精度 原型 0.804 / 回放 0.842
+  LSST                         回放首次超过原型的预算 ≈      54.9 KB   最高精度 原型 0.277 / 回放 0.293
+  ERing                        回放首次超过原型的预算 ≈      58.5 KB   最高精度 原型 0.970 / 回放 0.985
+  Fish                         回放首次超过原型的预算 ≈      62.2 KB   最高精度 原型 0.898 / 回放 0.939
+  CricketY                     回放首次超过原型的预算 ≈      62.2 KB   最高精度 原型 0.547 / 回放 0.669
+  CricketZ                     回放首次超过原型的预算 ≈      62.2 KB   最高精度 原型 0.560 / 回放 0.694
+  CricketX                     回放首次超过原型的预算 ≈      62.2 KB   最高精度 原型 0.553 / 回放 0.679
+  UWaveGestureLibraryZ         回放首次超过原型的预算 ≈      70.6 KB   最高精度 原型 0.675 / 回放 0.665
+  OSULeaf                      回放首次超过原型的预算 ≈      75.1 KB   最高精度 原型 0.866 / 回放 0.902
+  Lightning7                   回放首次超过原型的预算 ≈      80.6 KB   最高精度 原型 0.770 / 回放 0.795
+  FaceAll                      回放首次超过原型的预算 ≈      90.7 KB   最高精度 原型 0.714 / 回放 0.762
+  SwedishLeaf                  回放首次超过原型的预算 ≈      96.5 KB   最高精度 原型 0.837 / 回放 0.868
+  UWaveGestureLibraryY         回放首次超过原型的预算 ≈     102.8 KB   最高精度 原型 0.625 / 回放 0.626
+  InsectWingbeatSound          回放首次超过原型的预算 ≈     110.3 KB   最高精度 原型 0.596 / 回放 0.593
+  Crop                         回放首次超过原型的预算 ≈     124.0 KB   最高精度 原型 0.465 / 回放 0.503
+  UWaveGestureLibrary          回放首次超过原型的预算 ≈     195.8 KB   最高精度 原型 0.883 / 回放 0.907
+  ArticularyWordRecognition    回放首次超过原型的预算 ≈     922.4 KB   最高精度 原型 0.981 / 回放 0.990
+  PhonemeSpectra               回放首次超过原型的预算 ≈       nan KB   最高精度 原型 0.168 / 回放 0.157
+  中位数交叉预算 62.2 KB；回放从未超过的数据集 1 个；回放最高精度更高的数据集 22/27
+
+================ 6. AUC（MEMO 式）：预算-精度曲线下的平均精度 ================
+  A_f(b) = 该族在内存 ≤ b 的配置中能达到的最高 final_acc；一个都放不下时记为 1/K。
+  预算区间 1–1024 KB：Proto-selected=0.676  Proto-fewer=0.604  Replay-MR=0.452  HDC=0.451  Replay-1NN=0.409  CNN-frozen=0.404  Analytic-bal=0.386
+      Proto-selected − Analytic-bal  : +29.0 点  27/27  p=0.0000
+      Proto-selected − CNN-frozen    : +27.1 点  27/27  p=0.0000
+      Proto-selected − HDC           : +22.4 点  27/27  p=0.0000
+      Proto-selected − Proto-fewer   :  +7.1 点  26/27  p=0.0000
+      Proto-selected − Replay-1NN    : +26.6 点  26/27  p=0.0000
+      Proto-selected − Replay-MR     : +22.4 点  27/27  p=0.0000
+  预算区间 1–16 KB：Proto-selected=0.662  Proto-fewer=0.550  CNN-frozen=0.284  HDC=0.283  Replay-1NN=0.239  Replay-MR=0.172  Analytic-bal=0.111
+      Proto-selected − Analytic-bal  : +55.1 点  27/27  p=0.0000
+      Proto-selected − CNN-frozen    : +37.8 点  27/27  p=0.0000
+      Proto-selected − HDC           : +37.8 点  27/27  p=0.0000
+      Proto-selected − Proto-fewer   : +11.2 点  26/27  p=0.0000
+      Proto-selected − Replay-1NN    : +42.3 点  27/27  p=0.0000
+      Proto-selected − Replay-MR     : +48.9 点  27/27  p=0.0000
+  预算区间 16–1024 KB：Proto-selected=0.685  Proto-fewer=0.643  Replay-MR=0.638  Analytic-bal=0.567  HDC=0.565  Replay-1NN=0.525  CNN-frozen=0.488
+      Proto-selected − Analytic-bal  : +11.9 点  27/27  p=0.0000
+      Proto-selected − CNN-frozen    : +19.7 点  26/27  p=0.0000
+      Proto-selected − HDC           : +12.0 点  27/27  p=0.0000
+      Proto-selected − Proto-fewer   :  +4.3 点  25/27  p=0.0000
+      Proto-selected − Replay-1NN    : +16.1 点  26/27  p=0.0000
+      Proto-selected − Replay-MR     :  +4.8 点  22/27  p=0.0003
+
+================ 7. 内存构成（main，均值） ================
+  fixed = 总内存 − 随类数增长的部分（bias、μ、σ、下标、码本、scaler 等）
+  prune-binh-f84             总     0.61 KB  其中随类增长     0.12 KB  固定状态占  80.7%
+  prune-binzh-f84            总     0.77 KB  其中随类增长     0.12 KB  固定状态占  84.8%
+  prune-binh-f336            总     2.44 KB  其中随类增长     0.47 KB  固定状态占  80.7%
+  prune-binzh-f336           总     3.09 KB  其中随类增长     0.47 KB  固定状态占  84.8%
+  prune-ncmzh-f84            总     4.41 KB  其中随类增长     3.76 KB  固定状态占  14.9%
+  prune-ncmzh-f336           总    17.65 KB  其中随类增长    15.02 KB  固定状态占  14.9%
+  prune-ncmz-f336            总    19.61 KB  其中随类增长    15.02 KB  固定状态占  23.4%
+  mrrep-f840-m4              总   151.91 KB  其中随类增长   140.38 KB  固定状态占   7.6%
+  mrrep-f840-m8              总   214.66 KB  其中随类增长   203.13 KB  固定状态占   5.4%
+  prune-bin-f840             总     9.38 KB  其中随类增长     1.17 KB  固定状态占  87.5%
+  prune-binzh-f840           总     7.74 KB  其中随类增长     1.17 KB  固定状态占  84.8%
+  prune-binh-f840            总     6.10 KB  其中随类增长     1.17 KB  固定状态占  80.7%
+  mr-ncm-k10000              总   485.92 KB  其中随类增长   446.87 KB  固定状态占   8.0%
+  mrrep-f840-m4              总   151.91 KB  其中随类增长   140.38 KB  固定状态占   7.6%
+  1nn-m4                     总   102.83 KB  其中随类增长   102.83 KB  固定状态占   0.0%
+
+================ 8. 敏感性协议 ================
+  —— way1：27 个数据集，22 个共同配置 ——
+    prune-binh-f84           way1: final=0.608 novel=0.537  main: final=0.612        0.6 KB
+    prune-binzh-f84          way1: final=0.628 novel=0.563  main: final=0.634        0.8 KB
+    prune-bin-f84            way1: final=0.608 novel=0.537  main: final=0.611        0.9 KB
+    prune-binh-f336          way1: final=0.635 novel=0.581  main: final=0.639        2.4 KB
+    prune-binzh-f336         way1: final=0.652 novel=0.599  main: final=0.657        3.1 KB
+    prune-bin-f336           way1: final=0.635 novel=0.580  main: final=0.638        3.8 KB
+    prune-binh-f840          way1: final=0.637 novel=0.591  main: final=0.642        6.1 KB
+    prune-binzh-f840         way1: final=0.651 novel=0.606  main: final=0.658        7.7 KB
+    prune-bin-f840           way1: final=0.637 novel=0.591  main: final=0.642        9.4 KB
+    prune-bin-teen-f840      way1: final=0.591 novel=0.550  main: final=0.597        9.4 KB
+    prune-binz-f840          way1: final=0.651 novel=0.606  main: final=0.657       12.7 KB
+    1nn-m1                   way1: final=0.406 novel=0.404  main: final=0.415       25.7 KB
+    hdc-real-D512            way1: final=0.537 novel=0.460  main: final=0.541       27.1 KB
+    prune-ncmc-f840          way1: final=0.612 novel=0.563  main: final=0.617       45.8 KB
+    prune-ncmz-f840          way1: final=0.663 novel=0.614  main: final=0.669       49.0 KB
+    mrrep-f840-m1            way1: final=0.462 novel=0.519  main: final=0.463       74.8 KB
+    1nn-m4                   way1: final=0.518 novel=0.511  main: final=0.518      102.8 KB
+    mrrep-f840-m4            way1: final=0.678 novel=0.669  main: final=0.677      151.9 KB
+    1nn-m16                  way1: final=0.562 novel=0.462  main: final=0.561      251.1 KB
+    mrrep-f840-m16           way1: final=0.688 novel=0.564  main: final=0.690      300.2 KB
+    hdc-real-D8192           way1: final=0.555 novel=0.476  main: final=0.559      433.3 KB
+    mr-ncmc-k10000           way1: final=0.602 novel=0.573  main: final=0.605      525.0 KB
+    平均名次：mrrep-f840-m16 4.6, prune-ncmz-f840 5.0, mrrep-f840-m4 5.2, prune-binzh-f840 6.7, prune-binzh-f336 6.8, prune-binz-f840 6.9, prune-binh-f840 8.7, prune-bin-f840 8.9, prune-binh-f336 9.6, prune-bin-f336 9.6, prune-binzh-f84 10.5, prune-ncmc-f840 12.0, mr-ncmc-k10000 12.9, prune-binh-f84 13.1, prune-bin-f84 13.1, prune-bin-teen-f840 14.5, hdc-real-D8192 14.8, 1nn-m16 14.9, hdc-real-D512 16.6, 1nn-m4 17.9, mrrep-f840-m1 19.4, 1nn-m1 21.3
+    前沿：prune-binh-f84(0.6KB, 0.608) → prune-binzh-f84(0.8KB, 0.628) → prune-binh-f336(2.4KB, 0.635) → prune-binzh-f336(3.1KB, 0.652) → prune-ncmz-f840(49.0KB, 0.663) → mrrep-f840-m4(151.9KB, 0.678) → mrrep-f840-m16(300.2KB, 0.688)
+    Proto-selected vs Replay-1NN: 胜 3380/3455  Δ=+22.0 点  数据集 25/25  p=0.0000  [排除 低于 990 / 高于 114]
+    Proto-selected vs Replay-MR: 无重叠
+  —— shot1：27 个数据集，22 个共同配置 ——
+    prune-binh-f84           shot1: final=0.550 novel=0.410  main: final=0.612        0.6 KB
+    prune-binzh-f84          shot1: final=0.571 novel=0.431  main: final=0.634        0.8 KB
+    prune-bin-f84            shot1: final=0.549 novel=0.409  main: final=0.611        0.9 KB
+    prune-binh-f336          shot1: final=0.574 novel=0.443  main: final=0.639        2.4 KB
+    prune-binzh-f336         shot1: final=0.590 novel=0.458  main: final=0.657        3.1 KB
+    prune-bin-f336           shot1: final=0.573 novel=0.443  main: final=0.638        3.8 KB
+    prune-binh-f840          shot1: final=0.574 novel=0.453  main: final=0.642        6.1 KB
+    prune-binzh-f840         shot1: final=0.590 novel=0.467  main: final=0.658        7.7 KB
+    prune-bin-f840           shot1: final=0.574 novel=0.453  main: final=0.642        9.4 KB
+    prune-bin-teen-f840      shot1: final=0.542 novel=0.447  main: final=0.597        9.4 KB
+    prune-binz-f840          shot1: final=0.590 novel=0.468  main: final=0.657       12.7 KB
+    1nn-m1                   shot1: final=0.402 novel=0.399  main: final=0.415       25.7 KB
+    hdc-real-D512            shot1: final=0.444 novel=0.226  main: final=0.541       27.1 KB
+    prune-ncmc-f840          shot1: final=0.546 novel=0.424  main: final=0.617       45.8 KB
+    prune-ncmz-f840          shot1: final=0.598 novel=0.469  main: final=0.669       49.0 KB
+    1nn-m4                   shot1: final=0.447 novel=0.320  main: final=0.518       63.1 KB
+    mrrep-f840-m1            shot1: final=0.535 novel=0.509  main: final=0.463       74.8 KB
+    mrrep-f840-m4            shot1: final=0.554 novel=0.343  main: final=0.677      112.2 KB
+    1nn-m16                  shot1: final=0.470 novel=0.248  main: final=0.561      198.2 KB
+    mrrep-f840-m16           shot1: final=0.540 novel=0.252  main: final=0.690      247.3 KB
+    hdc-real-D8192           shot1: final=0.454 novel=0.226  main: final=0.559      433.3 KB
+    mr-ncmc-k10000           shot1: final=0.529 novel=0.429  main: final=0.605      525.0 KB
+    平均名次：prune-ncmz-f840 4.6, prune-binzh-f336 5.8, prune-binz-f840 6.2, prune-binzh-f840 6.2, prune-binh-f840 8.4, prune-binh-f336 8.5, prune-bin-f840 8.6, prune-bin-f336 8.6, prune-binzh-f84 8.6, prune-ncmc-f840 11.2, mrrep-f840-m4 11.6, prune-binh-f84 11.9, prune-bin-teen-f840 12.1, prune-bin-f84 12.1, mrrep-f840-m16 12.2, mrrep-f840-m1 12.9, mr-ncmc-k10000 13.1, 1nn-m16 16.5, hdc-real-D8192 17.4, 1nn-m4 18.1, hdc-real-D512 18.2, 1nn-m1 20.2
+    前沿：prune-binh-f84(0.6KB, 0.550) → prune-binzh-f84(0.8KB, 0.571) → prune-binh-f336(2.4KB, 0.574) → prune-binzh-f336(3.1KB, 0.590) → prune-ncmz-f840(49.0KB, 0.598)
+    Proto-selected vs Replay-1NN: 胜 3087/3227  Δ=+17.6 点  数据集 25/25  p=0.0000  [排除 低于 990 / 高于 140]
+    Proto-selected vs Replay-MR: 无重叠
+
+================ 9. 逐数据集（main，seed 平均，final_acc × 100） ================
+  prune-binzh-f840   − mr-ncm-k10000         : 均值  +4.5  胜 21/27  p=0.0005   DistalPhalanxTW -3.7, SyntheticControl -3.5, UWaveGestureLibraryY -2.5, UWaveGestureLibraryX -1.3, ProximalPhalanxTW -0.8, SwedishLeaf -0.7, Plane +0.6, UWaveGestureLibrary +0.8, MiddlePhalanxTW +1.4, UWaveGestureLibraryZ +1.8, InsectWingbeatSound +1.8, PhonemeSpectra +1.9, MedicalImages +2.1, Crop +2.5, ERing +2.9, Lightning7 +4.1, ArticularyWordRecognition +4.5, PenDigits +4.9, Libras +5.0, ElectricDevices +5.0, LSST +7.6, CricketY +9.0, FaceAll +10.7, Fish +15.9, CricketZ +16.8, CricketX +17.8, OSULeaf +17.9
+  prune-binzh-f840   − mr-ncmz-k10000        : 均值  +9.7  胜 26/27  p=0.0000   DistalPhalanxTW -1.6, PhonemeSpectra +0.4, Crop +1.0, UWaveGestureLibraryY +1.8, ElectricDevices +2.0, MiddlePhalanxTW +2.5, LSST +2.8, CricketX +3.1, MedicalImages +4.3, UWaveGestureLibraryX +4.3, UWaveGestureLibraryZ +4.6, CricketY +4.8, SwedishLeaf +5.3, CricketZ +5.7, FaceAll +6.3, PenDigits +6.4, SyntheticControl +7.3, Libras +9.8, InsectWingbeatSound +11.0, ProximalPhalanxTW +11.6, ArticularyWordRecognition +15.3, OSULeaf +18.2, Plane +18.7, UWaveGestureLibrary +21.7, Lightning7 +22.5, Fish +32.3, ERing +40.4
+  prune-binzh-f840   − 1nn-m16               : 均值  +9.6  胜 24/27  p=0.0000   MedicalImages -4.2, PenDigits -3.6, Crop -2.0, ArticularyWordRecognition +1.8, ERing +2.0, Plane +3.8, DistalPhalanxTW +3.9, MiddlePhalanxTW +4.3, UWaveGestureLibraryY +5.0, UWaveGestureLibrary +5.6, UWaveGestureLibraryX +5.8, InsectWingbeatSound +6.4, PhonemeSpectra +8.6, CricketX +8.8, Libras +9.6, CricketY +9.6, CricketZ +10.1, UWaveGestureLibraryZ +11.1, LSST +12.6, SyntheticControl +14.5, FaceAll +15.3, SwedishLeaf +15.4, Lightning7 +17.0, ProximalPhalanxTW +17.6, Fish +20.2, ElectricDevices +23.6, OSULeaf +37.7
+  prune-binzh-f840   − mrrep-f840-m4         : 均值  -1.9  胜 7/27  p=0.0151   CricketX -9.8, CricketZ -8.8, MedicalImages -7.5, Libras -6.1, SyntheticControl -5.4, CricketY -5.2, OSULeaf -4.9, SwedishLeaf -4.9, UWaveGestureLibraryX -2.9, FaceAll -2.4, Fish -1.8, UWaveGestureLibrary -1.6, MiddlePhalanxTW -1.6, Lightning7 -1.4, ERing -1.3, PenDigits -0.9, Crop -0.7, ArticularyWordRecognition -0.6, Plane -0.4, LSST -0.2, InsectWingbeatSound +0.1, UWaveGestureLibraryY +0.2, PhonemeSpectra +1.7, UWaveGestureLibraryZ +2.1, DistalPhalanxTW +2.9, ElectricDevices +3.1, ProximalPhalanxTW +6.2
+  prune-binzh-f840   − mrrep-f840-m16        : 均值  -3.2  胜 5/27  p=0.0046   CricketZ -15.2, CricketX -13.7, MedicalImages -13.1, CricketY -12.4, Libras -7.9, OSULeaf -7.4, SyntheticControl -6.6, Fish -5.5, UWaveGestureLibraryX -4.4, SwedishLeaf -4.4, FaceAll -3.7, PenDigits -3.5, Crop -3.1, Lightning7 -3.0, UWaveGestureLibrary -2.1, DistalPhalanxTW -1.4, UWaveGestureLibraryY -1.4, ERing -1.2, ArticularyWordRecognition -0.9, PhonemeSpectra -0.6, Plane -0.4, UWaveGestureLibraryZ -0.3, LSST +1.3, InsectWingbeatSound +2.0, MiddlePhalanxTW +4.8, ElectricDevices +5.4, ProximalPhalanxTW +12.8
+  prune-binzh-f840   − hdc-real-D8192        : 均值  +9.9  胜 24/27  p=0.0000   DistalPhalanxTW -1.6, Crop -0.7, ProximalPhalanxTW -0.7, InsectWingbeatSound +0.4, ERing +1.2, ArticularyWordRecognition +2.1, MiddlePhalanxTW +2.2, MedicalImages +3.2, PenDigits +3.5, Plane +3.6, Lightning7 +4.1, UWaveGestureLibraryY +4.4, UWaveGestureLibrary +5.0, UWaveGestureLibraryX +5.6, LSST +7.0, PhonemeSpectra +8.6, SyntheticControl +9.1, SwedishLeaf +11.4, ElectricDevices +11.7, UWaveGestureLibraryZ +12.3, Libras +14.9, CricketY +16.9, FaceAll +20.7, CricketZ +21.0, CricketX +21.6, Fish +32.1, OSULeaf +47.1
+  prune-binzh-f840   − analytic-cvbal-k2520  : 均值  +0.2  胜 13/27  p=0.9529   Crop -9.4, UWaveGestureLibraryY -6.2, UWaveGestureLibraryX -5.9, SwedishLeaf -4.1, SyntheticControl -4.1, PenDigits -4.0, CricketX -3.0, CricketZ -2.6, UWaveGestureLibraryZ -2.4, UWaveGestureLibrary -2.0, Libras -1.7, InsectWingbeatSound -1.5, MedicalImages -1.0, CricketY -0.1, FaceAll +0.1, LSST +0.4, Plane +0.6, ArticularyWordRecognition +1.3, DistalPhalanxTW +1.9, ERing +2.3, Fish +4.1, Lightning7 +4.4, ElectricDevices +4.6, PhonemeSpectra +4.7, MiddlePhalanxTW +5.1, OSULeaf +6.0, ProximalPhalanxTW +17.4
+  prune-binz-f840    − mr-ncm-k10000         : 均值  +4.5  胜 21/27  p=0.0007   DistalPhalanxTW -3.9, SyntheticControl -3.5, UWaveGestureLibraryY -2.5, UWaveGestureLibraryX -1.4, ProximalPhalanxTW -0.8, SwedishLeaf -0.6, UWaveGestureLibrary +0.6, Plane +0.6, MiddlePhalanxTW +1.3, InsectWingbeatSound +1.6, UWaveGestureLibraryZ +1.7, PhonemeSpectra +1.9, MedicalImages +2.2, Crop +2.4, ERing +3.0, Lightning7 +3.8, ArticularyWordRecognition +4.3, PenDigits +4.9, ElectricDevices +4.9, Libras +5.0, LSST +7.7, CricketY +8.7, FaceAll +10.7, Fish +15.7, CricketZ +16.8, CricketX +17.8, OSULeaf +17.9
+  prune-binz-f840    − mr-ncmz-k10000        : 均值  +9.7  胜 26/27  p=0.0000   DistalPhalanxTW -1.7, PhonemeSpectra +0.4, Crop +1.0, ElectricDevices +1.8, UWaveGestureLibraryY +1.9, MiddlePhalanxTW +2.3, LSST +2.8, CricketX +3.1, UWaveGestureLibraryX +4.3, MedicalImages +4.4, CricketY +4.5, UWaveGestureLibraryZ +4.5, SwedishLeaf +5.4, CricketZ +5.7, PenDigits +6.3, FaceAll +6.3, SyntheticControl +7.3, Libras +9.8, InsectWingbeatSound +10.8, ProximalPhalanxTW +11.6, ArticularyWordRecognition +15.2, OSULeaf +18.2, Plane +18.7, UWaveGestureLibrary +21.4, Lightning7 +22.2, Fish +32.1, ERing +40.4
+  prune-binz-f840    − 1nn-m16               : 均值  +9.6  胜 24/27  p=0.0000   MedicalImages -4.2, PenDigits -3.7, Crop -2.1, ArticularyWordRecognition +1.7, ERing +2.1, DistalPhalanxTW +3.7, Plane +3.8, MiddlePhalanxTW +4.2, UWaveGestureLibraryY +5.1, UWaveGestureLibrary +5.3, UWaveGestureLibraryX +5.8, InsectWingbeatSound +6.2, PhonemeSpectra +8.6, CricketX +8.9, CricketY +9.3, Libras +9.6, CricketZ +10.1, UWaveGestureLibraryZ +11.0, LSST +12.6, SyntheticControl +14.5, FaceAll +15.3, SwedishLeaf +15.5, Lightning7 +16.7, ProximalPhalanxTW +17.6, Fish +20.0, ElectricDevices +23.5, OSULeaf +37.7
+  prune-binz-f840    − mrrep-f840-m4         : 均值  -2.0  胜 6/27  p=0.0112   CricketX -9.7, CricketZ -8.8, MedicalImages -7.4, Libras -6.1, CricketY -5.4, SyntheticControl -5.4, OSULeaf -4.9, SwedishLeaf -4.8, UWaveGestureLibraryX -2.9, FaceAll -2.4, Fish -2.1, UWaveGestureLibrary -1.8, MiddlePhalanxTW -1.7, Lightning7 -1.6, ERing -1.2, PenDigits -0.9, Crop -0.8, ArticularyWordRecognition -0.7, Plane -0.4, LSST -0.1, InsectWingbeatSound -0.1, UWaveGestureLibraryY +0.3, PhonemeSpectra +1.7, UWaveGestureLibraryZ +2.1, DistalPhalanxTW +2.7, ElectricDevices +3.0, ProximalPhalanxTW +6.2
+  prune-binz-f840    − mrrep-f840-m16        : 均值  -3.2  胜 5/27  p=0.0050   CricketZ -15.1, CricketX -13.6, MedicalImages -13.0, CricketY -12.7, Libras -7.9, OSULeaf -7.4, SyntheticControl -6.6, Fish -5.7, UWaveGestureLibraryX -4.5, SwedishLeaf -4.3, FaceAll -3.7, PenDigits -3.6, Lightning7 -3.3, Crop -3.2, UWaveGestureLibrary -2.3, DistalPhalanxTW -1.6, UWaveGestureLibraryY -1.4, ERing -1.1, ArticularyWordRecognition -1.0, PhonemeSpectra -0.6, UWaveGestureLibraryZ -0.4, Plane -0.4, LSST +1.4, InsectWingbeatSound +1.8, MiddlePhalanxTW +4.7, ElectricDevices +5.3, ProximalPhalanxTW +12.8
+  prune-binz-f840    − hdc-real-D8192        : 均值  +9.8  胜 24/27  p=0.0000   DistalPhalanxTW -1.7, Crop -0.8, ProximalPhalanxTW -0.7, InsectWingbeatSound +0.2, ERing +1.3, ArticularyWordRecognition +2.0, MiddlePhalanxTW +2.1, MedicalImages +3.3, PenDigits +3.5, Plane +3.6, Lightning7 +3.8, UWaveGestureLibraryY +4.5, UWaveGestureLibrary +4.7, UWaveGestureLibraryX +5.5, LSST +7.1, PhonemeSpectra +8.6, SyntheticControl +9.1, SwedishLeaf +11.5, ElectricDevices +11.6, UWaveGestureLibraryZ +12.2, Libras +14.9, CricketY +16.6, FaceAll +20.7, CricketZ +21.0, CricketX +21.6, Fish +31.9, OSULeaf +47.1
+  prune-binz-f840    − analytic-cvbal-k2520  : 均值  +0.1  胜 13/27  p=0.8593   Crop -9.4, UWaveGestureLibraryY -6.1, UWaveGestureLibraryX -6.0, SyntheticControl -4.1, PenDigits -4.0, SwedishLeaf -4.0, CricketX -3.0, CricketZ -2.6, UWaveGestureLibraryZ -2.5, UWaveGestureLibrary -2.2, Libras -1.7, InsectWingbeatSound -1.6, MedicalImages -0.9, CricketY -0.3, FaceAll +0.1, LSST +0.5, Plane +0.6, ArticularyWordRecognition +1.1, DistalPhalanxTW +1.7, ERing +2.4, Fish +3.9, Lightning7 +4.1, ElectricDevices +4.5, PhonemeSpectra +4.8, MiddlePhalanxTW +4.9, OSULeaf +6.0, ProximalPhalanxTW +17.4
+  prune-bin-f840     − mr-ncm-k10000         : 均值  +3.0  胜 21/27  p=0.0070   DistalPhalanxTW -4.6, UWaveGestureLibraryY -2.0, SyntheticControl -1.9, UWaveGestureLibraryX -1.9, MedicalImages -1.8, ProximalPhalanxTW -1.5, SwedishLeaf +0.4, InsectWingbeatSound +0.5, ERing +0.6, PhonemeSpectra +0.7, Plane +0.8, MiddlePhalanxTW +0.9, UWaveGestureLibrary +1.1, Lightning7 +1.4, UWaveGestureLibraryZ +1.8, Libras +2.2, Crop +2.4, PenDigits +2.7, ElectricDevices +4.0, ArticularyWordRecognition +4.1, LSST +5.6, CricketY +5.6, FaceAll +10.1, CricketZ +10.7, OSULeaf +11.2, CricketX +12.2, Fish +14.6
+  prune-bin-f840     − mr-ncmz-k10000        : 均值  +8.2  胜 23/27  p=0.0000   CricketX -2.5, DistalPhalanxTW -2.4, PhonemeSpectra -0.8, CricketZ -0.4, MedicalImages +0.4, LSST +0.8, Crop +0.9, ElectricDevices +1.0, CricketY +1.4, MiddlePhalanxTW +1.9, UWaveGestureLibraryY +2.3, UWaveGestureLibraryX +3.8, PenDigits +4.2, UWaveGestureLibraryZ +4.6, FaceAll +5.8, SwedishLeaf +6.5, Libras +7.0, SyntheticControl +8.8, InsectWingbeatSound +9.7, ProximalPhalanxTW +10.9, OSULeaf +11.5, ArticularyWordRecognition +15.0, Plane +18.9, Lightning7 +19.7, UWaveGestureLibrary +22.0, Fish +31.1, ERing +38.1
+  prune-bin-f840     − 1nn-m16               : 均值  +8.1  胜 23/27  p=0.0000   MedicalImages -8.2, PenDigits -5.8, Crop -2.1, ERing -0.3, ArticularyWordRecognition +1.5, DistalPhalanxTW +3.0, CricketX +3.2, MiddlePhalanxTW +3.8, CricketZ +3.9, Plane +4.0, InsectWingbeatSound +5.1, UWaveGestureLibraryX +5.3, UWaveGestureLibraryY +5.5, UWaveGestureLibrary +5.9, CricketY +6.3, Libras +6.8, PhonemeSpectra +7.4, LSST +10.6, UWaveGestureLibraryZ +11.1, Lightning7 +14.2, FaceAll +14.7, SyntheticControl +16.1, SwedishLeaf +16.6, ProximalPhalanxTW +16.9, Fish +19.0, ElectricDevices +22.6, OSULeaf +31.0
+  prune-bin-f840     − mrrep-f840-m4         : 均值  -3.5  胜 6/27  p=0.0007   CricketX -15.4, CricketZ -14.9, OSULeaf -11.6, MedicalImages -11.5, Libras -8.9, CricketY -8.5, Lightning7 -4.1, SyntheticControl -3.9, SwedishLeaf -3.7, ERing -3.6, UWaveGestureLibraryX -3.4, Fish -3.1, PenDigits -3.0, FaceAll -3.0, LSST -2.2, MiddlePhalanxTW -2.1, UWaveGestureLibrary -1.2, InsectWingbeatSound -1.2, ArticularyWordRecognition -0.9, Crop -0.8, Plane -0.2, PhonemeSpectra +0.5, UWaveGestureLibraryY +0.7, DistalPhalanxTW +2.0, ElectricDevices +2.1, UWaveGestureLibraryZ +2.1, ProximalPhalanxTW +5.6
+  prune-bin-f840     − mrrep-f840-m16        : 均值  -4.7  胜 4/27  p=0.0007   CricketZ -21.3, CricketX -19.3, MedicalImages -17.0, CricketY -15.7, OSULeaf -14.0, Libras -10.7, Fish -6.7, Lightning7 -5.8, PenDigits -5.7, SyntheticControl -5.1, UWaveGestureLibraryX -5.0, FaceAll -4.3, ERing -3.5, Crop -3.2, SwedishLeaf -3.2, DistalPhalanxTW -2.3, PhonemeSpectra -1.8, UWaveGestureLibrary -1.7, ArticularyWordRecognition -1.2, UWaveGestureLibraryY -0.9, LSST -0.7, UWaveGestureLibraryZ -0.3, Plane -0.2, InsectWingbeatSound +0.7, MiddlePhalanxTW +4.3, ElectricDevices +4.4, ProximalPhalanxTW +12.1
+  prune-bin-f840     − hdc-real-D8192        : 均值  +8.3  胜 21/27  p=0.0000   DistalPhalanxTW -2.4, ProximalPhalanxTW -1.4, ERing -1.1, InsectWingbeatSound -0.9, Crop -0.8, MedicalImages -0.8, PenDigits +1.4, Lightning7 +1.4, MiddlePhalanxTW +1.7, ArticularyWordRecognition +1.8, Plane +3.8, UWaveGestureLibraryY +4.9, LSST +5.0, UWaveGestureLibraryX +5.1, UWaveGestureLibrary +5.3, PhonemeSpectra +7.4, SyntheticControl +10.7, ElectricDevices +10.7, Libras +12.1, UWaveGestureLibraryZ +12.3, SwedishLeaf +12.6, CricketY +13.5, CricketZ +14.9, CricketX +16.0, FaceAll +20.2, Fish +30.9, OSULeaf +40.4
+  prune-bin-f840     − analytic-cvbal-k2520  : 均值  -1.4  胜 9/27  p=0.0775   Crop -9.5, CricketZ -8.7, CricketX -8.6, UWaveGestureLibraryX -6.4, PenDigits -6.1, UWaveGestureLibraryY -5.7, MedicalImages -4.9, Libras -4.4, CricketY -3.4, SwedishLeaf -2.9, InsectWingbeatSound -2.7, SyntheticControl -2.5, UWaveGestureLibraryZ -2.4, UWaveGestureLibrary -1.7, LSST -1.6, OSULeaf -0.7, FaceAll -0.5, ERing +0.0, Plane +0.8, ArticularyWordRecognition +0.9, DistalPhalanxTW +1.0, Lightning7 +1.6, Fish +2.9, PhonemeSpectra +3.5, ElectricDevices +3.6, MiddlePhalanxTW +4.5, ProximalPhalanxTW +16.7
+  prune-binh-f840    − mr-ncm-k10000         : 均值  +3.0  胜 21/27  p=0.0055   DistalPhalanxTW -3.9, UWaveGestureLibraryY -2.1, UWaveGestureLibraryX -1.9, SyntheticControl -1.9, MedicalImages -1.8, ProximalPhalanxTW -1.6, ERing +0.3, SwedishLeaf +0.4, InsectWingbeatSound +0.5, PhonemeSpectra +0.7, Plane +0.8, MiddlePhalanxTW +0.8, UWaveGestureLibrary +1.2, Lightning7 +1.4, UWaveGestureLibraryZ +1.8, Libras +2.3, Crop +2.3, PenDigits +2.7, ElectricDevices +4.1, ArticularyWordRecognition +4.1, LSST +5.6, CricketY +5.8, FaceAll +10.1, CricketZ +10.8, OSULeaf +11.1, CricketX +12.2, Fish +14.4
+  prune-binh-f840    − mr-ncmz-k10000        : 均值  +8.2  胜 23/27  p=0.0000   CricketX -2.5, DistalPhalanxTW -1.7, PhonemeSpectra -0.8, CricketZ -0.3, MedicalImages +0.4, LSST +0.8, Crop +0.9, ElectricDevices +1.1, CricketY +1.6, MiddlePhalanxTW +1.8, UWaveGestureLibraryY +2.3, UWaveGestureLibraryX +3.8, PenDigits +4.2, UWaveGestureLibraryZ +4.6, FaceAll +5.8, SwedishLeaf +6.5, Libras +7.1, SyntheticControl +8.9, InsectWingbeatSound +9.6, ProximalPhalanxTW +10.8, OSULeaf +11.4, ArticularyWordRecognition +15.0, Plane +18.9, Lightning7 +19.7, UWaveGestureLibrary +22.1, Fish +30.9, ERing +37.8
+  prune-binh-f840    − 1nn-m16               : 均值  +8.1  胜 23/27  p=0.0000   MedicalImages -8.1, PenDigits -5.8, Crop -2.2, ERing -0.6, ArticularyWordRecognition +1.5, CricketX +3.2, MiddlePhalanxTW +3.6, DistalPhalanxTW +3.7, Plane +4.0, CricketZ +4.1, InsectWingbeatSound +5.0, UWaveGestureLibraryX +5.3, UWaveGestureLibraryY +5.5, UWaveGestureLibrary +5.9, CricketY +6.5, Libras +6.9, PhonemeSpectra +7.4, LSST +10.6, UWaveGestureLibraryZ +11.1, Lightning7 +14.2, FaceAll +14.8, SyntheticControl +16.1, SwedishLeaf +16.6, ProximalPhalanxTW +16.8, Fish +18.7, ElectricDevices +22.7, OSULeaf +30.9
+  prune-binh-f840    − mrrep-f840-m4         : 均值  -3.5  胜 6/27  p=0.0008   CricketX -15.4, CricketZ -14.8, OSULeaf -11.7, MedicalImages -11.4, Libras -8.8, CricketY -8.3, Lightning7 -4.1, ERing -3.9, SyntheticControl -3.8, SwedishLeaf -3.7, UWaveGestureLibraryX -3.4, Fish -3.3, PenDigits -3.0, FaceAll -3.0, MiddlePhalanxTW -2.2, LSST -2.2, InsectWingbeatSound -1.3, UWaveGestureLibrary -1.2, ArticularyWordRecognition -0.9, Crop -0.9, Plane -0.2, PhonemeSpectra +0.5, UWaveGestureLibraryY +0.7, UWaveGestureLibraryZ +2.2, ElectricDevices +2.2, DistalPhalanxTW +2.7, ProximalPhalanxTW +5.5
+  prune-binh-f840    − mrrep-f840-m16        : 均值  -4.7  胜 4/27  p=0.0006   CricketZ -21.2, CricketX -19.3, MedicalImages -16.9, CricketY -15.5, OSULeaf -14.1, Libras -10.6, Fish -7.0, Lightning7 -5.8, PenDigits -5.7, SyntheticControl -5.0, UWaveGestureLibraryX -5.0, FaceAll -4.2, ERing -3.8, Crop -3.3, SwedishLeaf -3.2, PhonemeSpectra -1.8, UWaveGestureLibrary -1.7, DistalPhalanxTW -1.6, ArticularyWordRecognition -1.2, UWaveGestureLibraryY -0.9, LSST -0.7, UWaveGestureLibraryZ -0.3, Plane -0.2, InsectWingbeatSound +0.7, MiddlePhalanxTW +4.2, ElectricDevices +4.5, ProximalPhalanxTW +12.0
+  prune-binh-f840    − hdc-real-D8192        : 均值  +8.3  胜 21/27  p=0.0000   DistalPhalanxTW -1.7, ProximalPhalanxTW -1.5, ERing -1.4, InsectWingbeatSound -0.9, Crop -0.8, MedicalImages -0.7, Lightning7 +1.4, PenDigits +1.4, MiddlePhalanxTW +1.6, ArticularyWordRecognition +1.8, Plane +3.8, UWaveGestureLibraryY +4.9, LSST +5.0, UWaveGestureLibraryX +5.0, UWaveGestureLibrary +5.4, PhonemeSpectra +7.4, SyntheticControl +10.7, ElectricDevices +10.8, Libras +12.2, UWaveGestureLibraryZ +12.3, SwedishLeaf +12.6, CricketY +13.7, CricketZ +15.0, CricketX +16.0, FaceAll +20.2, Fish +30.6, OSULeaf +40.3
+  prune-binh-f840    − analytic-cvbal-k2520  : 均值  -1.4  胜 9/27  p=0.0815   Crop -9.5, CricketX -8.6, CricketZ -8.6, UWaveGestureLibraryX -6.5, PenDigits -6.1, UWaveGestureLibraryY -5.7, MedicalImages -4.9, Libras -4.3, CricketY -3.2, SwedishLeaf -2.9, InsectWingbeatSound -2.8, SyntheticControl -2.5, UWaveGestureLibraryZ -2.4, UWaveGestureLibrary -1.6, LSST -1.6, OSULeaf -0.8, FaceAll -0.5, ERing -0.3, Plane +0.8, ArticularyWordRecognition +0.9, Lightning7 +1.6, DistalPhalanxTW +1.7, Fish +2.6, PhonemeSpectra +3.5, ElectricDevices +3.7, MiddlePhalanxTW +4.4, ProximalPhalanxTW +16.6
+
+================ 10. 更新耗时（main，ms，均值） ================
+  1nn                       0.1 –      0.1 ms
+  analytic-cv               0.2 –    413.1 ms
+  analytic-cvbal            0.2 –    410.0 ms
+  analytic-g1               0.2 –    411.9 ms
+  cnn-finetune             74.2 –     74.2 ms
+  cnn-frozen                1.0 –      3.4 ms
+  hdc-bin                  10.2 –     63.9 ms
+  hdc-real                 10.2 –     64.9 ms
+  minirocket-retrain      144.1 –    144.1 ms
+  mr-bin                    0.1 –      0.5 ms
+  mr-ncm                    0.1 –      0.3 ms
+  mr-ncmc                   0.1 –      0.5 ms
+  mr-ncmz                   0.1 –      0.6 ms
+  mrrep-f84                 3.0 –      6.5 ms
+  mrrep-f840                3.3 –      9.2 ms
+  mrrep-ffull               7.5 –     36.8 ms
+  prune-bin                 0.1 –      0.3 ms
+  prune-bin-teen            0.2 –      0.6 ms
+  prune-binh                0.1 –      0.3 ms
+  prune-binz                0.1 –      0.4 ms
+  prune-binzh               0.1 –      0.4 ms
+  prune-ncm                 0.1 –      0.2 ms
+  prune-ncmc                0.1 –      0.3 ms
+  prune-ncmc-teen           0.2 –      0.6 ms
+  prune-ncmch               0.1 –      0.3 ms
+  prune-ncmz                0.1 –      0.3 ms
+  prune-ncmzh               0.1 –      0.3 ms

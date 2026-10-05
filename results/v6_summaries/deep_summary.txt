@@ -1,0 +1,59 @@
+深度 FSCIL 基线（ResNet1D，云端 GPU 复现），27 个数据集 × 5 种子
+记账：骨干参数+BN 统计量 fp32；原型 4Kd；TS-ACL 的 R 只计上三角，W 计 4EK；随机扩展层可由种子重建，不计
+
+                                         acc   base  novel  forget         kb
+family         config                                                        
+deep-alice     resnet-alice-w4         0.484  0.571  0.401   0.144     10.092
+deep-proto     resnet-proto-w4         0.482  0.572  0.399   0.154     10.092
+deep-teen      resnet-teen-w4          0.465  0.573  0.364   0.153     10.092
+deep-alice     resnet-alice-w8         0.540  0.630  0.458   0.141     35.934
+deep-proto     resnet-proto-w8         0.545  0.639  0.460   0.139     35.934
+deep-teen      resnet-teen-w8          0.525  0.622  0.438   0.156     35.934
+deep-proto     resnet-proto-w16        0.568  0.665  0.482   0.137    134.868
+deep-alice     resnet-alice-w16        0.579  0.671  0.493   0.131    134.868
+deep-teen      resnet-teen-w16         0.550  0.637  0.473   0.165    134.868
+               resnet-teen-w32         0.561  0.646  0.484   0.170    521.736
+deep-alice     resnet-alice-w32        0.584  0.680  0.498   0.131    521.736
+deep-proto     resnet-proto-w32        0.583  0.680  0.493   0.136    521.736
+deep-tsacl512  resnet-tsacl-E512-w4    0.459  0.741  0.191   0.022    545.623
+               resnet-tsacl-E512-w8    0.525  0.779  0.284   0.027    571.108
+               resnet-tsacl-E512-w16   0.563  0.803  0.334   0.026    669.326
+               resnet-tsacl-E512-w32   0.591  0.811  0.382   0.024   1054.764
+deep-proto     resnet-proto-w64        0.583  0.683  0.492   0.140   2051.472
+deep-teen      resnet-teen-w64         0.563  0.646  0.488   0.177   2051.472
+deep-alice     resnet-alice-w64        0.588  0.683  0.503   0.137   2051.472
+deep-tsacl512  resnet-tsacl-E512-w64   0.596  0.815  0.391   0.026   2581.639
+deep-tsacl2048 resnet-tsacl-E2048-w4   0.467  0.738  0.211   0.027   8297.290
+               resnet-tsacl-E2048-w8   0.541  0.776  0.316   0.032   8322.774
+               resnet-tsacl-E2048-w16  0.582  0.804  0.372   0.025   8420.993
+               resnet-tsacl-E2048-w32  0.601  0.808  0.408   0.027   8806.431
+               resnet-tsacl-E2048-w64  0.618  0.817  0.430   0.027  10333.306
+
+KiloRocket (4.4 KB) − 各深度配置（点，领先数据集数，Wilcoxon p）
+  resnet-alice-w16             +8.5  18/27  p=0.0008
+  resnet-alice-w32             +8.0  20/27  p=0.0010
+  resnet-alice-w4             +18.0  27/27  p=0.0000
+  resnet-alice-w64             +7.6  18/27  p=0.0013
+  resnet-alice-w8             +12.4  23/27  p=0.0000
+  resnet-proto-w16             +9.5  21/27  p=0.0000
+  resnet-proto-w32             +8.1  19/27  p=0.0014
+  resnet-proto-w4             +18.2  27/27  p=0.0000
+  resnet-proto-w64             +8.1  19/27  p=0.0004
+  resnet-proto-w8             +11.9  24/27  p=0.0000
+  resnet-teen-w16             +11.4  23/27  p=0.0000
+  resnet-teen-w32             +10.3  24/27  p=0.0000
+  resnet-teen-w4              +19.9  27/27  p=0.0000
+  resnet-teen-w64             +10.1  22/27  p=0.0000
+  resnet-teen-w8              +13.8  24/27  p=0.0000
+  resnet-tsacl-E2048-w16       +8.2  22/27  p=0.0002
+  resnet-tsacl-E2048-w32       +6.3  17/27  p=0.0104
+  resnet-tsacl-E2048-w4       +19.7  26/27  p=0.0000
+  resnet-tsacl-E2048-w64       +4.6  17/27  p=0.0262
+  resnet-tsacl-E2048-w8       +12.3  24/27  p=0.0000
+  resnet-tsacl-E512-w16       +10.0  23/27  p=0.0000
+  resnet-tsacl-E512-w32        +7.3  19/27  p=0.0014
+  resnet-tsacl-E512-w4        +20.5  26/27  p=0.0000
+  resnet-tsacl-E512-w64        +6.8  19/27  p=0.0019
+  resnet-tsacl-E512-w8        +13.9  25/27  p=0.0000
+
+对每个数据集事后挑最好的深度配置：+1.6 点  12/27  p=0.5303

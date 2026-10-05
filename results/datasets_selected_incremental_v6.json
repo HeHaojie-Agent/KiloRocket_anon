@@ -1,0 +1,43 @@
+{
+  "filters": {
+    "max_length": 500,
+    "min_classes": 6,
+    "max_classes": 60,
+    "min_per_class_train": 5,
+    "max_channels": 20,
+    "min_test_size": 60
+  },
+  "univariate": [
+    "CricketX",
+    "CricketY",
+    "CricketZ",
+    "Crop",
+    "DistalPhalanxTW",
+    "ElectricDevices",
+    "FaceAll",
+    "Fish",
+    "InsectWingbeatSound",
+    "Lightning7",
+    "MedicalImages",
+    "MiddlePhalanxTW",
+    "OSULeaf",
+    "Plane",
+    "ProximalPhalanxTW",
+    "SwedishLeaf",
+    "SyntheticControl",
+    "UWaveGestureLibraryX",
+    "UWaveGestureLibraryY",
+    "UWaveGestureLibraryZ"
+  ],
+  "multivariate": [
+    "ArticularyWordRecognition",
+    "ERing",
+    "LSST",
+    "Libras",
+    "PenDigits",
+    "PhonemeSpectra",
+    "UWaveGestureLibrary"
+  ],
+  "n_univariate": 20,
+  "n_multivariate": 7
+}
