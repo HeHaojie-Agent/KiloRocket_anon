@@ -1,0 +1,5 @@
+__pycache__/
+*.pyc
+paper_assets/
+cloud_baselines/data/
+cloud_baselines/logs/
